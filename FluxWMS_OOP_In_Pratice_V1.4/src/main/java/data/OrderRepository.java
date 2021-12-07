@@ -29,7 +29,7 @@ public class OrderRepository {
         try {
             ORDER_LIST.clear();
 
-            reader = new BufferedReader(new FileReader("./data/order.json"));
+            reader = new BufferedReader(new FileReader("/Users/temporaryadmin/FLuxProject/FluxWMS_OOP_In_Pratice_V1.4/src/main/resources/order.json"));
             Object data = JSONValue.parse(reader);
             if (data instanceof JSONArray) {
                 JSONArray dataArray = (JSONArray) data;

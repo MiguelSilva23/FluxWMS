@@ -3,8 +3,8 @@ import data.*;
 
 import java.util.*;
 
-import static data.UserRepository.isUserAdmin;
-import static data.UserRepository.isUserEmployee;
+import static data.UserRepository.*;
+import static data.WarehouseRepository.*;
 
 
 /**
@@ -69,7 +69,6 @@ public class TheWarehouseManager {
     public void performAction(int option) {
         switch (option) {
             case 1:
-//                System.out.println("This is the all available items in our 2 warehouses: ");
                 this.listItemsByWarehouse();
                 break;
             case 2:
@@ -140,9 +139,9 @@ public class TheWarehouseManager {
         this.userName = reader.nextLine();
 
         if(isUserAdmin(userName)){
-            TheWarehouseApp.SESSION_USER = new Admin(userName);
+            TheWarehouseApp.SESSION_USER = getUserAdminObject(userName);
         }else if(isUserEmployee(userName)){
-            TheWarehouseApp.SESSION_USER = new Employee(userName);
+            TheWarehouseApp.SESSION_USER = (getUserEmployeeObject(userName));
         }else{
             TheWarehouseApp.SESSION_USER = new Guest(userName);
         }
@@ -159,7 +158,12 @@ public class TheWarehouseManager {
 
     private void listItemsByWarehouse() {
 
-        System.out.println(Warehouse.getStock());
+        int warehouseID;
+
+        System.out.print("Please enter the warehouse ID: ");
+        warehouseID = Integer.parseInt(reader.nextLine());
+
+        System.out.println(getItemsByWarehouse(warehouseID,getAllItems()));
         SESSION_ACTIONS.add("Listed " + Warehouse.occupancy() + " items.");
     }
 

@@ -20,6 +20,10 @@ public class Test {
 
         for (Warehouse warehouse : WarehouseRepository.WAREHOUSE_LIST) {
             System.out.println(warehouse.toString());
+            warehouse.loadingStock();
+            System.out.println(warehouse.getId());
+            System.out.println(warehouse.getStock());
+            System.out.println(warehouse.occupancy());
         }
 
         Employee one2 = new Employee("jonh","123","Admin",null);

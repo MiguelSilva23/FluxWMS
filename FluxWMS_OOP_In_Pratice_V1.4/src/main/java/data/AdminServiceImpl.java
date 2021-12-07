@@ -3,10 +3,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static data.OrderRepository.getAllOrders;
 
-import TheWarehouseApp.SESSION_USER;
 
 public class AdminServiceImpl implements AdminService{
+
+    private boolean isAuthenticated = false;
+
+
     // To read inputs from the console/CLI
     private Scanner reader = new Scanner(System.in);
 
@@ -17,6 +21,7 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void authenticateAdmin() {
 
+            // SESSION_USER.authenticate();
 
 
         // TODO implement
@@ -26,11 +31,11 @@ public class AdminServiceImpl implements AdminService{
         String password = reader.nextLine();
 
         //prompt for password while admin is valid i.e the password matches
-        do{
-            SESSION_USER.
-
-
-        }while(Admin is valid);
+//        do{
+//           TheWarehouseApp.SESSION_USER.greet();
+//
+//
+//        }while(Admin is valid);
 
         //set the SESSION_USER's isAuthenticated property to true.
 
@@ -68,7 +73,7 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public void performAction(int option) {
-        // TODO implement
+
 
         switch (option) {
             case 1: // "1. List orders by warehouse"
@@ -90,27 +95,39 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public void listOrdersByWarehouse() {
-        // TODO implement
+
         //get all orders using OrderRepository
+        printsListOfOrdersToConsole(getAllOrders());
 
 
         //prompt user to enter the warehouse id
+        System.out.print("Please enter the warehouse id: ");
+        int warehouseId = Integer.parseInt(reader.nextLine());
 
 
         //create an empty list of order
         //Iterate over all the orders obtained from OrderRepository and add the orders belonging to the desired warehouse to the list
 
+        List<Order> listOrderByWarehouse = new ArrayList<>();
+        for(Order order : getAllOrders()){
+            if(order.getWarehouse() == warehouseId){
+                listOrderByWarehouse.add(order);
+            }
+        }
+
 
         // use the printsListOfOrdersToConsole method and pass the created list as argument.
+        printsListOfOrdersToConsole(listOrderByWarehouse);
 
 
         //Add the action detail string to the SESSION_ACTIONS in TheWarehouseApp. Eg: 'Listed Orders of warehouse ' + {warehouseId}
+       // TheWarehouseApp.SESSION_ACTIONS.add("Listed Orders of warehouse " + warehouseId);
 
     }
 
     @Override
     public void listOrdersByStatus() {
-        // TODO implement
+
         // Keep asking for user's choice until a valid value is received
         int choice = 0;
         System.out.println("List Orders by Status : choose 1, 2 or 3");
@@ -150,40 +167,65 @@ public class AdminServiceImpl implements AdminService{
         }
 
         //initialize  new empty list of order
+        List<Order> listOfOrderByStatus = new ArrayList<>();
 
 
         //iterate over all the orders from OrderRepository and add only the orders with desired status to the list
+        for (Order order : getAllOrders()){
+            if(order.getStatus().equalsIgnoreCase(status)){
+                listOfOrderByStatus.add(order);
+            }
+        }
 
 
         // use the printsListOfOrdersToConsole method and pass the created list as argument.
+        printsListOfOrdersToConsole(listOfOrderByStatus);
 
 
         //Add the action detail string to the SESSION_ACTIONS in TheWarehouseApp. Eg: 'Listed Orders with status ' + {status}
+        // TheWarehouseApp.SESSION_ACTIONS.add("Listed Orders with status " + status);
 
     }
 
     @Override
     public void listOrdersWhoseTotalCostGreaterThan() {
-        // TODO implement
 
-        double choice = 0;
+        double marginalValue = 0;
 
         //prompt user to enter marginal value for total cost until a valid numerical value is entered.
+        System.out.print("Please enter marginal value of total cost: ");
+        marginalValue = Double.parseDouble(reader.nextLine());
+        do {
+            if (marginalValue < 0) {
+                System.out.println("Invalid number: Only positive numbers please");
+                System.out.print("Please enter marginal value of total cost: ");
+                marginalValue = Double.parseDouble(reader.nextLine());
+            }
+        }
+            while (marginalValue < 0) ;
 
 
-
-        //initialize an empty list of orders
-
-
-        //iterate over all the orders from OrderRepository and add only the orders that meets the criteria to the list
+            //initialize an empty list of orders
+            List<Order> listOfOrderGreaterThan = new ArrayList<>();
 
 
-        // use the printsListOfOrdersToConsole method and pass the created list as argument.
+            //iterate over all the orders from OrderRepository and add only the orders that meets the criteria to the list
+            for (Order order : getAllOrders()) {
+                if (order.getTotalCost() > marginalValue) {
+                    listOfOrderGreaterThan.add(order);
+                }
+            }
 
 
-        //Add the action detail string to the SESSION_ACTIONS in TheWarehouseApp. Eg: 'Listed Orders with total cost greater than ' + {marginalValue}
+            // use the printsListOfOrdersToConsole method and pass the created list as argument.
+            printsListOfOrdersToConsole(listOfOrderGreaterThan);
 
-    }
+
+            //Add the action detail string to the SESSION_ACTIONS in TheWarehouseApp. Eg: 'Listed Orders with total cost greater than ' + {marginalValue}
+            // TheWarehouseApp.SESSION_ACTIONS.add("Listed Orders with total cost greater than " + marginalValue);
+
+        }
+
 
 
     @Override
@@ -204,6 +246,8 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void quit() {
         // TODO implement
+
+        System.exit(0);
 
         //implement as similar to TheWarehouseManager.quit();
 

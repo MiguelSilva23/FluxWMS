@@ -1,6 +1,7 @@
 package data;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Employee extends User{
 
@@ -11,9 +12,7 @@ public class Employee extends User{
     private String role;
     List<Employee> headOf;
 
-    public Employee(String userName){
-        super(userName);
-    };
+
     public Employee(String userName, String password,String role, List<Employee> headOf) {
         super(userName);
         this.password = password;
@@ -22,10 +21,21 @@ public class Employee extends User{
     }
 
     @Override
-    public boolean authenticate(String password) {
+    public boolean authenticate() {
+        System.out.print("Please introduce your Password: ");
+        Scanner scanner = new Scanner(System.in);
+        String password2 = scanner.nextLine();
+
+        if(this.getPassword().equals(password2)){
+            setAuthenticated();
+            return true;
+        }else{
+            System.out.println("Wrong password !!");
+            return authenticate();
+        }
 
 
-        if(getPassword().equals(password)){return true;}else{return false;}
+
     }
 
     public void order(String item, int amount){
@@ -39,13 +49,16 @@ public class Employee extends User{
 
     @Override
     public void greet() {
-        System.out.println("Hello, " + this.name + "!\nIf you experience a problem with the system," +
+        System.out.println("Hello, " + getName() + "!\nIf you experience a problem with the system," +
                 " please contact technical support.");
+
+        System.out.println(getClass().getSimpleName());
     }
 
     @Override
     public void bye(List<String> SESSION_ACTIONS) {
         System.out.printf("\nThank you for your visit, %s!\n", this.name);
+
     }
 
     // Getters

@@ -2,14 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import data.AdminService;
-import data.AdminServiceImpl;
-import data.Order;
-import data.OrderRepository;
-
-
-import data.User;
-import data.UserRepository;
+import data.*;
 
 /**
  *
@@ -42,7 +35,9 @@ public static List<String> SESSION_ACTIONS = new ArrayList<String>();
             } else { //If user is admin
 
                 // prompt for password and allow further actions if authenticated:
-
+                if(!SESSION_USER.isAuthenticated()) {
+                    SESSION_USER.authenticate();
+                }
 
                 AdminServiceImpl adminService = new AdminServiceImpl();
 

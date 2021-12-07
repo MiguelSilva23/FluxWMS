@@ -5,17 +5,20 @@ import java.util.List;
 public class Admin extends Employee {
 
 
-    public Admin(String userName) {
-        super(userName);
-    }
-
-    public Admin(String userName, String password, List<Employee> headOf) {
-        super(userName, password,headOf);
+    public Admin(String userName, String password,String role, List<Employee> headOf) {
+        super(userName, password,role,headOf);
     }
 
     @Override
-    public boolean authenticate(String password) {
-        return super.authenticate(password);
+    public boolean authenticate() {
+
+        if(!super.authenticate()){
+            super.authenticate();
+        }else{
+            isAuthenticated = true;
+        }
+        return true;
+
     }
 
     @Override
@@ -33,6 +36,8 @@ public class Admin extends Employee {
         System.out.println("Hello, " +  getName() +"\n" +
                 "Welcome to the Admin Panel.\n" +
                 "With higher authority comes higher responsibility.");
+
+        System.out.println(getClass().getSimpleName());
     }
 
     @Override

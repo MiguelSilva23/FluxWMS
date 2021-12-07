@@ -20,7 +20,7 @@ import java.util.Set;
  *
  */
 public class UserRepository {
-    private static List<Employee> EMPLOYEE_LIST = new ArrayList<Employee>();
+    private static List<Employee> EMPLOYEE_LIST = new ArrayList<>();
     private static List<Admin> ADMIN_LIST = new ArrayList<>();
 
     /**
@@ -32,7 +32,7 @@ public class UserRepository {
         try {
             EMPLOYEE_LIST.clear();
 
-            reader = new BufferedReader(new FileReader("./data/personnel.json"));
+            reader = new BufferedReader(new FileReader("src/main/resources/personnel.json"));
             Object data = JSONValue.parse(reader);
             if (data instanceof JSONArray) {
                 JSONArray dataArray = (JSONArray) data;
@@ -62,7 +62,8 @@ public class UserRepository {
     static{
         for (Employee employee : EMPLOYEE_LIST) {
             if(employee.getRole().equalsIgnoreCase("Admin")){
-                ADMIN_LIST.add((Admin)employee);
+                Admin adminUserList = new Admin(employee.getName(), employee.getPassword(), employee.getRole(), null);
+                ADMIN_LIST.add((adminUserList));
             }
         }
     }
@@ -100,12 +101,30 @@ public class UserRepository {
 
     public static boolean isUserAdmin(String name){
 
-        for (Admin admin: getAdminList()) {
+        for (Employee admin: getAdminList()) {
             if (admin.getName().equalsIgnoreCase(name)){
                 return true;
             }
         }
         return false;
+    }
+
+    public static Employee getUserEmployeeObject(String name) {
+        for (Employee employee : getAllEmployees()) {
+            if (name.equals(employee.getName())) {
+                return employee;
+            }
+        }
+        return null;
+    }
+
+    public static Admin getUserAdminObject(String name){
+        for (Admin admin: getAdminList()) {
+            if (admin.getName().equalsIgnoreCase(name)){
+                return admin;
+            }
+        }
+        return null;
     }
 
     }

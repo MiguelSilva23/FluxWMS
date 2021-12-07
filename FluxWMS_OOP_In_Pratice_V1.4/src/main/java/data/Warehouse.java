@@ -1,39 +1,39 @@
 package data;
 
-import data.Item;
-
 import java.util.*;
+
+import static data.WarehouseRepository.getAllItems;
 
 public class Warehouse {
 
     // Fields
     private int id;
-   private static List<Item> stock;
+    private static List<Item> stock;
 
     // Constructor
     public Warehouse(int warehouseId){
 
         this.id = warehouseId;
        this.stock = new ArrayList<>();
+       loadingStock();
 
     }
 
-//    public data.Warehouse(data.Warehouse another){
-//        this.stock = another.stock;
-//    }
-
-    //Methods
-
-//    public List<data.Item> clearList(){
-//        if(!stock.isEmpty()){return List<data.Item> stock2 = new ArrayList<>();}
-//        return stock;
-//    }
 
     public int getId() {
         return id;
     }
 
     public static int occupancy() {return stock.size();}
+
+    public void loadingStock(){
+
+        for ( Item item : getAllItems()){
+            if(item.getWarehouse() == this.id){
+                stock.add(item);
+            }
+        }
+    }
 
     public void addItem(Item item) {
         stock.add(item);

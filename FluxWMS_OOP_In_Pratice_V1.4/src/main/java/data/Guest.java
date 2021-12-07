@@ -8,7 +8,7 @@ public class Guest extends User {
     }
 
     @Override
-    public boolean authenticate(String password) {
+    public boolean authenticate() {
         return false;
     }
 

@@ -39,7 +39,7 @@ public class WarehouseRepository {
             //ITEM_LIST.clear();
             WAREHOUSE_LIST.clear();
 
-            reader = new BufferedReader(new FileReader("/Users/temporaryadmin/FLuxProject/FluxWMS_OOP_V1.3/src/main/resources/stock.json"));
+            reader = new BufferedReader(new FileReader("./src/main/resources/stock.json"));
             Object data = JSONValue.parse(reader);
             if (data instanceof JSONArray) {
                 JSONArray dataArray = (JSONArray) data;
@@ -191,6 +191,10 @@ public class WarehouseRepository {
             }
         }
         return items;
+    }
+
+    public static List<Warehouse> getWarehouseList() {
+        return WAREHOUSE_LIST;
     }
 
 
