@@ -1,0 +1,24 @@
+<style>
+    #id {
+        font-size: 24px;
+        line-height: 1.2;
+        text-align: center;
+    }
+    #pid {
+        font-size: 24px;
+        text-align: center;
+    }
+</style>
+
+<div>
+    <h2>Welcome to Warehouse Management System</h2>
+
+    <p><a href="/">Home Page </a></p> <p><a href="/listAllItems">List all items</a></p>
+    <p id="pid">All categories: </p>
+    <div id="id"th:each="category : ${categories}" >
+        <p> - <a th:text="${category}" th:href="'/browseByCategory/' + ${category}"></a> </p>
+    </div>
+
+
+</div>
+

@@ -1,0 +1,44 @@
+<style>
+    table {
+        border-collapse: collapse;
+        width: 75%;
+
+    }
+    th{
+        border: 1px solid dodgerblue;
+        text-align: center;
+
+    }
+    td {
+        border: 1px solid dodgerblue;
+        text-align: center;
+    }
+
+</style>
+<div>
+    <h2>Welcome to Warehouse Management System</h2>
+
+    <p><a href="/">Home Page</a></p> <p><a href="/listAllItems">List all items</a></p>
+    <p><a href="/browseByCategory">List of categories</a></p>
+
+    <h3 align="center"th:text="'Items by category ' + ${category} +' (Count: ' + ${itemCount} + ')' " class="head3"></h3>
+
+    <table align="center">
+        <tbody>
+        <th ><strong>Item name</strong></th>
+        <th >Category</th>
+        <th >Date of Registry</th>
+        <th >Warehouse Id</th>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.state}"></td>
+            <td th:text="${item.category}"></td>
+            <td th:text="${item.dateOfStock}"></td>
+            <td th:text="${item.warehouse}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+
+</div>
